@@ -30,7 +30,7 @@ jobs:
 
       # 1. Instalar toolchain exacto de Rust
       - name: Install Rust toolchain
-        uses: dtolnay/rust-toolchain@1.80.0
+        uses: dtolnay/rust-toolchain@1.94.0
 
       # 2. Caché de Cargo para acelerar ejecuciones en CI
       - name: Cache cargo dependencies
