@@ -38,10 +38,10 @@ jobs:
 
       # 3. Inicializar CodeQL
       - name: Initialize CodeQL
-        uses: github/codeql-action/init@v3
+        uses: github/codeql-action/init@v4
         with:
           languages: ${{ matrix.language }}
-          build-mode: ${{ matrix.build-mode }}
+          queries: security-extended,security-and-quality
 
       # 4. Paso de compilación (requerido para Rust)
       - name: Build project
