@@ -1,0 +1,55 @@
+name: "CodeQL Advanced"
+
+on:
+  push:
+    branches: [ "release/**" ]
+  pull_request:
+    branches: [ "release/**" ]
+  schedule:
+    - cron: '16 23 * * 6'
+
+jobs:
+  analyze:
+    name: Analyze Project Rust
+    runs-on: ubuntu-latest
+    permissions:
+      security-events: write
+      actions: read
+      contents: read
+
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - language: rust
+            build-mode: manual
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # 1. Instalar toolchain exacto de Rust
+      - name: Install Rust toolchain
+        uses: dtolnay/rust-toolchain@1.94.0
+
+      # 2. Caché de Cargo para acelerar ejecuciones en CI
+      - name: Cache cargo dependencies
+        uses: Swatinem/rust-cache@v2
+
+      # 3. Inicializar CodeQL
+      - name: Initialize CodeQL
+        uses: github/codeql-action/init@v4
+        with:
+          languages: ${{ matrix.language }}
+          queries: security-extended,security-and-quality
+
+      # 4. Paso de compilación (requerido para Rust)
+      - name: Build project
+        run: |
+          cargo build --release
+
+      # 5. Ejecutar análisis de vulnerabilidades
+      - name: Perform CodeQL Analysis
+        uses: github/codeql-action/analyze@v4
+        with:
+          category: "/language:${{ matrix.language }}"
