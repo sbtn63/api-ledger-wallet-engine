@@ -14,7 +14,8 @@
   "packageRules": [
     {
       "matchUpdateTypes": ["minor", "patch"],
-      "groupName": "non-major dependencies"
+      "groupName": "non-major dependencies",
+      "automerge": true
     }
   ],
   "vulnerabilityAlerts": {
