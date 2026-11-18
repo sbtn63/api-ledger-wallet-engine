@@ -17,7 +17,7 @@ services:
       - app-network
 
   pgadmin:
-    image: dpage/pgadmin4:8.5
+    image: dpage/pgadmin4:9.19
     container_name: pgadmin_panel
     restart: always
     environment:
